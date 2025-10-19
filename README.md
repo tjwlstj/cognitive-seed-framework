@@ -189,3 +189,53 @@ Apache License 2.0 - 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하�
 
 **Built with curiosity and precision** 🧠✨
 
+
+## 코어 아키텍처 (Core Architecture)
+
+본 프레임워크의 핵심은 **5개의 코어 컴포넌트**로 구성됩니다. 각 컴포넌트는 32개의 인지 시드를 동적으로 조합하여 복잡한 태스크를 해결하는 역할을 수행합니다.
+
+### 코어 컴포넌트
+
+| 컴포넌트 | 기능 | 파일 |
+|---|---|---|
+| **SeedRegistry** | 32개 시드의 등록, 메타데이터 관리, 검색 | `core/registry.py` |
+| **SeedRouter** | 입력/태스크 분석 후 실행할 시드 조합 결정 | `core/router.py` |
+| **CompositionEngine** | 시드 조합을 실행 가능한 계산 그래프(DAG)로 변환 | `core/composition.py` |
+| **CacheManager** | 시드 실행의 중간/최종 결과 캐싱 | `core/cache.py` |
+| **MetricsCollector** | 성능(정확도, 지연시간) 및 실행 통계 수집 | `core/metrics.py` |
+
+### 데이터 흐름
+
+1. **입력**: 사용자로부터 태스크 설명과 입력 데이터가 들어옵니다.
+2. **라우팅**: `SeedRouter`가 태스크를 분석하여 필요한 시드 목록을 `SeedRegistry`에서 조회하고 선택합니다.
+3. **조합**: `CompositionEngine`이 선택된 시드들의 의존성을 분석하여 실행 계획(DAG)을 수립합니다.
+4. **실행**: 엔진이 DAG에 따라 시드를 순차적/병렬적으로 실행합니다. `CacheManager`를 통해 캐시된 결과를 확인하고, 없으면 시드를 실행한 후 결과를 캐시에 저장합니다.
+5. **결과**: 최종 시드의 출력이 사용자에게 반환됩니다.
+6. **모니터링**: `MetricsCollector`가 전 과정의 성능 지표를 기록합니다.
+
+상세한 설계 문서는 [`docs/CORE_ARCHITECTURE.md`](docs/CORE_ARCHITECTURE.md)를 참조하세요.
+
+### 기본 사용 예제
+
+```python
+from core import SeedRegistry, SeedRouter, CompositionEngine, CacheManager
+
+# 1. 코어 컴포넌트 초기화
+registry = SeedRegistry()
+cache = CacheManager()
+router = SeedRouter(registry)
+engine = CompositionEngine(registry, cache)
+
+# 2. 시드 등록
+registry.register("A01_Boundary_Detector", boundary_detector, metadata)
+
+# 3. 태스크 실행
+task = "이미지에서 경계를 탐지하세요"
+input_data = load_image("example.jpg")
+
+selected_seeds = router(task, input_data)
+result = engine.execute(selected_seeds, input_data)
+```
+
+전체 예제는 [`examples/basic_usage.py`](examples/basic_usage.py)를 참조하세요.
+
