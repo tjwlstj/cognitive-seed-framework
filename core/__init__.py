@@ -12,6 +12,14 @@ from .router import SeedRouter
 from .composition import CompositionEngine, CompositionGraph
 from .cache import CacheManager
 from .metrics import MetricsCollector
+from .reproducibility import (
+    set_seed,
+    seed_worker,
+    get_reproducible_dataloader_config,
+    check_reproducibility,
+    ReproducibleContext,
+    enable_reproducibility
+)
 
 __all__ = [
     "SeedRegistry",
@@ -21,5 +29,12 @@ __all__ = [
     "CompositionGraph",
     "CacheManager",
     "MetricsCollector",
+    # Reproducibility
+    "set_seed",
+    "seed_worker",
+    "get_reproducible_dataloader_config",
+    "check_reproducibility",
+    "ReproducibleContext",
+    "enable_reproducibility",
 ]
 

@@ -65,21 +65,24 @@ class SeedRegistry:
     def __init__(self):
         """레지스트리 초기화"""
         self.seeds: Dict[str, Dict[str, Any]] = {}
+        self._aliases: Dict[str, str] = {}  # alias -> canonical name mapping
         logger.info("Seed Registry initialized")
     
     def register(
         self,
         name: str,
         seed_module: nn.Module,
-        metadata: SeedMetadata
+        metadata: SeedMetadata,
+        aliases: List[str] = None
     ) -> None:
         """
         시드를 레지스트리에 등록
         
         Args:
-            name: 시드 이름
+            name: 시드 이름 (canonical name)
             seed_module: 시드 모듈 (torch.nn.Module)
             metadata: 시드 메타데이터
+            aliases: 별칭 리스트 (예: ["A01", "SEED-A01"])
         
         Raises:
             ValueError: 이미 등록된 시드인 경우
@@ -91,6 +94,13 @@ class SeedRegistry:
             "module": seed_module,
             "metadata": metadata
         }
+        
+        # 별칭 등록
+        if aliases:
+            for alias in aliases:
+                if alias in self._aliases:
+                    logger.warning(f"Alias '{alias}' already exists, overwriting")
+                self._aliases[alias] = name
         
         logger.info(
             f"Registered seed: {name} (Level {metadata.level}, "
@@ -113,12 +123,18 @@ class SeedRegistry:
         del self.seeds[name]
         logger.info(f"Unregistered seed: {name}")
     
+    def _resolve_name(self, name: str) -> str:
+        """별칭을 canonical name으로 변환"""
+        return self._aliases.get(name, name)
+    
     def get(self, name: str) -> nn.Module:
         """
         이름으로 시드 모듈 가져오기
         
+        별칭도 지원합니다 (예: "A01", "SEED-A01", "A01_Edge_Detector" 모두 동일)
+        
         Args:
-            name: 시드 이름
+            name: 시드 이름 또는 별칭
         
         Returns:
             시드 모듈
@@ -126,17 +142,18 @@ class SeedRegistry:
         Raises:
             KeyError: 등록되지 않은 시드인 경우
         """
-        if name not in self.seeds:
+        canonical_name = self._resolve_name(name)
+        if canonical_name not in self.seeds:
             raise KeyError(f"Seed '{name}' is not registered")
         
-        return self.seeds[name]["module"]
+        return self.seeds[canonical_name]["module"]
     
     def get_metadata(self, name: str) -> SeedMetadata:
         """
         이름으로 시드 메타데이터 가져오기
         
         Args:
-            name: 시드 이름
+            name: 시드 이름 또는 별칭
         
         Returns:
             시드 메타데이터
@@ -144,10 +161,11 @@ class SeedRegistry:
         Raises:
             KeyError: 등록되지 않은 시드인 경우
         """
-        if name not in self.seeds:
+        canonical_name = self._resolve_name(name)
+        if canonical_name not in self.seeds:
             raise KeyError(f"Seed '{name}' is not registered")
         
-        return self.seeds[name]["metadata"]
+        return self.seeds[canonical_name]["metadata"]
     
     def query(
         self,

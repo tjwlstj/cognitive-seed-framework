@@ -15,8 +15,7 @@
 - **다중 기하학 투영**: Euclidean, Hyperbolic, Spherical 공간을 병렬로 활용
 - **연속 스케일 등변성**: 입력 스케일 변화에 강건한 조건부 정규화
 - **동적 시드 라우팅**: 태스크와 맥락에 따라 최적 시드 조합을 선택
-- **재현성 보장**: PyTorch DataLoader worker seed 초기화 및 deterministic 설정 지원
-- **명명 규칙 통일**: 다양한 시드 ID 형식 지원 (A01, SEED-A01, A01_Edge_Detector 등)
+- **양자화 지원**: INT8/FP8/FP16 다양한 비트폭으로 효율적 추론
 
 ## 아키텍처
 
@@ -27,7 +26,6 @@
 3. **스케일 강건성**: 연속 스케일 조건부 처리로 입력 변화에 대응
 4. **정량 표준**: 명확한 I/O 규격, 벤치마크, 수용 기준
 5. **설명가능성**: 각 시드의 기능, 가정, 제약을 투명하게 문서화
-6. **재현성**: 완전한 재현성을 위한 시드 관리 및 deterministic 설정
 
 ### 핵심 컴포넌트
 
@@ -53,16 +51,10 @@ cognitive-seed-framework/
 ├── seeds/                    # 시드 구현 및 가중치
 │   ├── atomic/              # Level 0: 8개 원자 시드
 │   ├── molecular/           # Level 1: 8개 분자 시드
-│   ├── cellular/            # Level 2: 8개 세포 시드 (예정)
-│   └── tissue/              # Level 3: 8개 조직 시드 (예정)
-├── core/                    # 코어 아키텍처
-│   ├── registry.py          # 시드 레지스트리
-│   ├── router.py            # 시드 라우터
-│   ├── composition.py       # 조합 엔진 (DAG)
-│   ├── cache.py             # 캐시 관리자
-│   ├── metrics.py           # 메트릭 수집기
-│   └── reproducibility.py   # 재현성 유틸리티
-├── examples/                # 사용 예제
+│   ├── cellular/            # Level 2: 8개 세포 시드
+│   └── tissue/              # Level 3: 8개 조직 시드
+├── compositions/            # 시드 조합 레시피
+├── benchmarks/              # 평가 벤치마크 및 결과
 ├── docs/                    # 문서 및 가이드
 └── README.md
 ```
@@ -140,111 +132,18 @@ pip install -r requirements.txt
 
 ### 빠른 시작
 
-#### 방법 1: load_seed() 헬퍼 함수 사용 (권장)
-
 ```python
-from seeds import load_seed
+from seeds import load_seed, SeedRouter
 
-# 개별 시드 로드 - 다양한 명명 규칙 지원
-edge_detector = load_seed("SEED-A01")  # ✅ 작동
-edge_detector = load_seed("A01")        # ✅ 작동 (동일한 시드)
-edge_detector = load_seed("A01_Edge_Detector")  # ✅ 작동 (동일한 시드)
-
-# 시드 실행
-import torch
-input_tensor = torch.randn(1, 3, 224, 224)
+# 개별 시드 로드
+edge_detector = load_seed("SEED-A01")
 output = edge_detector(input_tensor)
+
+# 시드 라우터 사용
+router = SeedRouter()
+active_seeds = router.select(task="segmentation", context=context)
+result = router.forward(input_tensor, active_seeds)
 ```
-
-#### 방법 2: 코어 아키텍처 사용 (고급)
-
-```python
-from core import SeedRegistry, SeedRouter, CompositionEngine, CacheManager
-from seeds import load_seed
-
-# 1. 코어 컴포넌트 초기화
-registry = SeedRegistry()
-cache = CacheManager()
-router = SeedRouter(registry)
-engine = CompositionEngine(registry, cache)
-
-# 2. 시드 등록 (별칭 지원)
-from core import SeedMetadata
-
-edge_detector = load_seed("A01")
-metadata = SeedMetadata(
-    name="A01_Edge_Detector",
-    level=0,
-    version="1.0.0",
-    description="Detects edges in images",
-    geometry=["E"],
-    tags=["vision", "edge"]
-)
-registry.register(
-    "A01_Edge_Detector",
-    edge_detector,
-    metadata,
-    aliases=["A01", "SEED-A01"]  # 별칭 등록
-)
-
-# 3. 시드 조회 (별칭으로도 가능)
-seed = registry.get("A01")  # ✅ 작동
-seed = registry.get("SEED-A01")  # ✅ 작동
-seed = registry.get("A01_Edge_Detector")  # ✅ 작동
-
-# 4. 태스크 실행
-selected_seeds = ["A01_Edge_Detector"]
-result = engine.execute(selected_seeds, input_tensor)
-```
-
-#### 방법 3: 재현성 보장
-
-```python
-from core import set_seed, enable_reproducibility
-from seeds import load_seed
-
-# 재현성 활성화 (Magic Seed 3407 사용)
-enable_reproducibility()
-
-# 또는 커스텀 시드 사용
-set_seed(42, deterministic=True)
-
-# 이제 모든 실행이 재현 가능
-model = load_seed("A01")
-output = model(input_tensor)
-```
-
-## 재현성 보장
-
-프레임워크는 완전한 재현성을 위한 유틸리티를 제공합니다:
-
-```python
-from core import (
-    set_seed,
-    seed_worker,
-    get_reproducible_dataloader_config,
-    check_reproducibility,
-    ReproducibleContext
-)
-from torch.utils.data import DataLoader
-
-# 1. 전역 시드 설정
-set_seed(42, deterministic=True)
-
-# 2. DataLoader 재현성 (worker seed 초기화)
-config = get_reproducible_dataloader_config()
-dataloader = DataLoader(dataset, batch_size=32, num_workers=4, **config)
-
-# 3. 재현성 자동 체크
-model = load_seed("A01")
-is_reproducible = check_reproducibility(model, input_tensor, seed=42, num_runs=5)
-
-# 4. 컨텍스트 매니저 사용
-with ReproducibleContext(seed=42):
-    output = model(input_tensor)  # 이 블록 내에서 재현성 보장
-```
-
-자세한 내용은 `examples/reproducibility_example.py`를 참조하세요.
 
 ## 평가 및 벤치마크
 
@@ -263,31 +162,10 @@ python benchmarks/run_evaluation.py --level all --output results.json
 
 ## 로드맵
 
-- **Phase 1**: 32 시드 참조 구현 + 단독 벤치마크 ✅ (Level 0-1 완료)
-- **Phase 2**: 백본 통합·QAT + 공개 벤치마크 결과 (진행 중)
+- **Phase 1**: 32 시드 참조 구현 + 단독 벤치마크 (현재)
+- **Phase 2**: 백본 통합·QAT + 공개 벤치마크 결과
 - **Phase 3**: 허브/배포 자동화, 아키텍처 검색
 - **Phase 4**: 신경과학 영감 신규 시드, 안전·윤리 프레임 통합
-
-## 최근 업데이트 (v1.1.1)
-
-### 추가된 기능
-
-1. **load_seed() 헬퍼 함수**: 다양한 명명 규칙 지원 (`seeds/__init__.py`)
-2. **재현성 유틸리티 모듈**: PyTorch 재현성 보장 (`core/reproducibility.py`)
-   - `set_seed()`: 전역 시드 설정
-   - `seed_worker()`: DataLoader worker seed 초기화
-   - `check_reproducibility()`: 자동 재현성 검증
-   - `ReproducibleContext`: 컨텍스트 매니저
-   - `enable_reproducibility()`: Magic Seed 3407 사용
-3. **별칭 매핑 시스템**: SeedRegistry에서 다양한 시드 ID 형식 지원
-4. **DAG 위상 정렬**: Kahn's algorithm 기반 순환 의존성 감지
-
-### 수정된 문제
-
-- ✅ README Quick Start 예제 코드 수정 (실제 import 경로와 일치)
-- ✅ PyTorch DataLoader worker seed 버그 해결
-- ✅ 시드 명명 규칙 통일 (A01, SEED-A01, A01_Edge_Detector 모두 지원)
-- ✅ CompositionEngine의 DAG 실행 순서 알고리즘 구현 완료
 
 ## 기여
 
@@ -301,8 +179,6 @@ Apache License 2.0 - 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하�
 
 - 표준 인지 시드 설계 가이드 v1.1 (2025-10-20)
 - 작성: 체시(Chesi) · 협업: 제로(Zero)
-- "Torch.manual_seed(3407) is all you need" - https://arxiv.org/abs/2109.08203
-- PyTorch Reproducibility Guide - https://pytorch.org/docs/stable/notes/randomness.html
 
 ## 연락처
 
@@ -312,4 +188,54 @@ Apache License 2.0 - 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하�
 ---
 
 **Built with curiosity and precision** 🧠✨
+
+
+## 코어 아키텍처 (Core Architecture)
+
+본 프레임워크의 핵심은 **5개의 코어 컴포넌트**로 구성됩니다. 각 컴포넌트는 32개의 인지 시드를 동적으로 조합하여 복잡한 태스크를 해결하는 역할을 수행합니다.
+
+### 코어 컴포넌트
+
+| 컴포넌트 | 기능 | 파일 |
+|---|---|---|
+| **SeedRegistry** | 32개 시드의 등록, 메타데이터 관리, 검색 | `core/registry.py` |
+| **SeedRouter** | 입력/태스크 분석 후 실행할 시드 조합 결정 | `core/router.py` |
+| **CompositionEngine** | 시드 조합을 실행 가능한 계산 그래프(DAG)로 변환 | `core/composition.py` |
+| **CacheManager** | 시드 실행의 중간/최종 결과 캐싱 | `core/cache.py` |
+| **MetricsCollector** | 성능(정확도, 지연시간) 및 실행 통계 수집 | `core/metrics.py` |
+
+### 데이터 흐름
+
+1. **입력**: 사용자로부터 태스크 설명과 입력 데이터가 들어옵니다.
+2. **라우팅**: `SeedRouter`가 태스크를 분석하여 필요한 시드 목록을 `SeedRegistry`에서 조회하고 선택합니다.
+3. **조합**: `CompositionEngine`이 선택된 시드들의 의존성을 분석하여 실행 계획(DAG)을 수립합니다.
+4. **실행**: 엔진이 DAG에 따라 시드를 순차적/병렬적으로 실행합니다. `CacheManager`를 통해 캐시된 결과를 확인하고, 없으면 시드를 실행한 후 결과를 캐시에 저장합니다.
+5. **결과**: 최종 시드의 출력이 사용자에게 반환됩니다.
+6. **모니터링**: `MetricsCollector`가 전 과정의 성능 지표를 기록합니다.
+
+상세한 설계 문서는 [`docs/CORE_ARCHITECTURE.md`](docs/CORE_ARCHITECTURE.md)를 참조하세요.
+
+### 기본 사용 예제
+
+```python
+from core import SeedRegistry, SeedRouter, CompositionEngine, CacheManager
+
+# 1. 코어 컴포넌트 초기화
+registry = SeedRegistry()
+cache = CacheManager()
+router = SeedRouter(registry)
+engine = CompositionEngine(registry, cache)
+
+# 2. 시드 등록
+registry.register("A01_Boundary_Detector", boundary_detector, metadata)
+
+# 3. 태스크 실행
+task = "이미지에서 경계를 탐지하세요"
+input_data = load_image("example.jpg")
+
+selected_seeds = router(task, input_data)
+result = engine.execute(selected_seeds, input_data)
+```
+
+전체 예제는 [`examples/basic_usage.py`](examples/basic_usage.py)를 참조하세요.
 
