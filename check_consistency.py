@@ -79,8 +79,8 @@ def check_init_files():
         print("\n[Molecular __init__.py]")
         
         # 구현된 시드만 import되어야 함
-        implemented = ['m01', 'm02', 'm04']
-        not_implemented = ['m03', 'm05', 'm06', 'm07', 'm08']
+        implemented = ['m01', 'm02', 'm03', 'm04']
+        not_implemented = ['m05', 'm06', 'm07', 'm08']
         
         for seed_id in implemented:
             class_name = ''.join(word.capitalize() for word in SEED_NAMES[seed_id].split())
