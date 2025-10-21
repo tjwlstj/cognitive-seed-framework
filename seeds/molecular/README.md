@@ -20,7 +20,7 @@ Molecular 시드는 2-3개의 Atomic 시드를 조합하여 구조적 추론, �
 - **Robustness**: 노이즈/변동에 성능 편차 < 15%
 - **Bit Depth**: INT8/FP8 양자화 지원
 
-## 구현 완료 시드 (Phase 1)
+## 구현 완료 시드 (Phase 1 + M03)
 
 ### SEED-M01 — Hierarchy Builder
 
@@ -101,6 +101,61 @@ causal_features_with_intervention = causality_detector(
     timeseries, 
     context={'interventions': interventions}
 )
+```
+
+---
+
+### SEED-M03 — Pattern Completer
+
+**Category**: Pattern  
+**Params**: ~550K  
+**Composed From**: A03 (Recurrence Spotter) + A06 (Sequence Tracker) + A01 (Edge Detector)
+
+결손된 패턴을 보간(interpolation)하거나 외삽(extrapolation)하여 완성합니다.
+
+#### 주요 기능
+
+- 결손 위치 자동 감지
+- 반복 패턴 기반 보간
+- 시퀀스 추세 기반 외삽
+- Transformer 기반 맥락 활용
+- 완성 품질 평가
+
+#### 사용 예제
+
+```python
+from seeds.molecular import PatternCompleter
+
+# 시드 생성
+pattern_completer = PatternCompleter(input_dim=128)
+
+# 시퀀스 데이터 입력 [B, L, D]
+sequence = torch.randn(4, 50, 128)  # 배치 4, 길이 50
+
+# Forward pass (자동 결손 감지)
+completed = pattern_completer(sequence)
+
+# 마스크를 사용한 보간
+mask = torch.ones(4, 50)
+mask[:, 10:20] = 0  # 10~19 인덱스 결손
+completed_with_mask = pattern_completer(sequence, mask=mask)
+
+# 특정 위치 보간
+missing_indices = [10, 15, 20, 25]
+interpolated = pattern_completer.interpolate(sequence, missing_indices)
+
+# 미래 예측 (외삽)
+extrapolated = pattern_completer.extrapolate(sequence, num_steps=10)
+print(f"Extrapolated shape: {extrapolated.shape}")  # [4, 60, 128]
+
+# 완성 품질 평가
+metrics = pattern_completer.compute_completion_quality(
+    original=sequence,
+    completed=completed,
+    mask=mask
+)
+print(f"MSE: {metrics['mse']:.4f}")
+print(f"Structural similarity: {metrics['structural_similarity']:.4f}")
 ```
 
 ---
@@ -203,10 +258,10 @@ Input → Seed_A → Intermediate
 
 | 시드 ID | 시드명 | 목표 파라미터 | 실제 파라미터 | 상태 |
 |---|---|---|---|---|
-| M01 | Hierarchy Builder | ~500K | - | ✓ 완료 |
+| M01 | Hierarchy Builder | ~500K | ~426K | ✓ 완료 |
 | M02 | Causality Detector | ~600K | - | ✓ 완료 |
+| M03 | Pattern Completer | ~550K | - | ✓ 완료 |
 | M04 | Spatial Transformer | ~450K | - | ✓ 완료 |
-| M03 | Pattern Completer | ~550K | - | 예정 |
 | M06 | Context Integrator | ~650K | - | 예정 |
 | M05 | Concept Crystallizer | ~700K | - | 예정 |
 | M07 | Analogy Mapper | ~600K | - | 예정 |
@@ -222,6 +277,6 @@ Input → Seed_A → Intermediate
 
 ---
 
-**구현 완료일**: 2025-10-21 (Phase 1)  
-**다음 단계**: Phase 2 구현 (M03, M06)
+**구현 완료일**: 2025-10-21 (Phase 1 + M03)  
+**다음 단계**: Phase 2 완료 (M06 구현)
 

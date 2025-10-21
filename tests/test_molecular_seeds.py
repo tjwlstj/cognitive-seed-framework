@@ -6,6 +6,7 @@ import torch
 from seeds.molecular import (
     HierarchyBuilder,
     CausalityDetector,
+    PatternCompleter,
     SpatialTransformer
 )
 
@@ -153,11 +154,123 @@ class TestMolecularSeeds:
         
         print("✓ Causal graph estimation successful")
     
+    # ========== M03: Pattern Completer ==========
+    
+    def test_pattern_completer_forward(self):
+        """M03: Forward pass 테스트"""
+        print("\n[10/15] Testing Pattern Completer - Forward pass...")
+        
+        seed = PatternCompleter(input_dim=self.input_dim)
+        seed = seed.to(self.device)
+        
+        # 입력: [B, L, D]
+        seq_len = 50
+        x = torch.randn(self.batch_size, seq_len, self.input_dim).to(self.device)
+        
+        # Forward
+        output = seed(x)
+        
+        # 출력 shape 확인
+        assert output.shape == (self.batch_size, seq_len, self.input_dim)
+        assert not torch.isnan(output).any()
+        
+        print("✓ Forward pass successful")
+    
+    def test_pattern_completer_with_mask(self):
+        """M03: 마스크를 사용한 패턴 완성 테스트"""
+        print("\n[11/15] Testing Pattern Completer - With mask...")
+        
+        seed = PatternCompleter(input_dim=self.input_dim)
+        seed = seed.to(self.device)
+        
+        seq_len = 50
+        x = torch.randn(self.batch_size, seq_len, self.input_dim).to(self.device)
+        
+        # 마스크 생성 (일부 결손)
+        mask = torch.ones(self.batch_size, seq_len).to(self.device)
+        mask[:, 10:20] = 0  # 10~19 인덱스 결손
+        
+        # Forward with mask
+        output = seed(x, mask=mask)
+        
+        # 결과 확인
+        assert output.shape == (self.batch_size, seq_len, self.input_dim)
+        assert not torch.isnan(output).any()
+        
+        print("✓ Pattern completion with mask successful")
+    
+    def test_pattern_completer_interpolate(self):
+        """M03: 보간 테스트"""
+        print("\n[12/15] Testing Pattern Completer - Interpolation...")
+        
+        seed = PatternCompleter(input_dim=self.input_dim)
+        seed = seed.to(self.device)
+        
+        seq_len = 50
+        x = torch.randn(self.batch_size, seq_len, self.input_dim).to(self.device)
+        
+        # 특정 위치 보간
+        missing_indices = [10, 15, 20, 25]
+        interpolated = seed.interpolate(x, missing_indices)
+        
+        # 결과 확인
+        assert interpolated.shape == (self.batch_size, seq_len, self.input_dim)
+        assert not torch.isnan(interpolated).any()
+        
+        print("✓ Interpolation successful")
+    
+    def test_pattern_completer_extrapolate(self):
+        """M03: 외삽 테스트"""
+        print("\n[13/15] Testing Pattern Completer - Extrapolation...")
+        
+        seed = PatternCompleter(input_dim=self.input_dim)
+        seed = seed.to(self.device)
+        
+        seq_len = 50
+        x = torch.randn(self.batch_size, seq_len, self.input_dim).to(self.device)
+        
+        # 미래 예측
+        num_steps = 10
+        extrapolated = seed.extrapolate(x, num_steps=num_steps)
+        
+        # 결과 확인
+        assert extrapolated.shape == (self.batch_size, seq_len + num_steps, self.input_dim)
+        assert not torch.isnan(extrapolated).any()
+        
+        print("✓ Extrapolation successful")
+    
+    def test_pattern_completer_quality(self):
+        """M03: 완성 품질 평가 테스트"""
+        print("\n[14/15] Testing Pattern Completer - Quality metrics...")
+        
+        seed = PatternCompleter(input_dim=self.input_dim)
+        seed = seed.to(self.device)
+        
+        seq_len = 50
+        original = torch.randn(self.batch_size, seq_len, self.input_dim).to(self.device)
+        
+        # 마스크 생성
+        mask = torch.ones(self.batch_size, seq_len).to(self.device)
+        mask[:, 10:20] = 0
+        
+        # 완성
+        completed = seed(original, mask=mask)
+        
+        # 품질 평가
+        metrics = seed.compute_completion_quality(original, completed, mask)
+        
+        # 결과 확인
+        assert 'mse' in metrics
+        assert 'structural_similarity' in metrics
+        assert 'completion_rate' in metrics
+        
+        print("✓ Quality metrics computation successful")
+    
     # ========== M04: Spatial Transformer ==========
     
     def test_spatial_transformer_forward(self):
         """M04: Forward pass 테스트"""
-        print("\n[7/9] Testing Spatial Transformer - Forward pass...")
+        print("\n[15/15] Testing Spatial Transformer - Forward pass...")
         
         seed = SpatialTransformer(input_dim=self.input_dim)
         seed = seed.to(self.device)
@@ -247,6 +360,13 @@ def run_all_tests():
         test_suite.test_causality_detector_forward()
         test_suite.test_causality_detector_with_intervention()
         test_suite.test_causality_detector_causal_graph()
+        
+        # M03 tests
+        test_suite.test_pattern_completer_forward()
+        test_suite.test_pattern_completer_with_mask()
+        test_suite.test_pattern_completer_interpolate()
+        test_suite.test_pattern_completer_extrapolate()
+        test_suite.test_pattern_completer_quality()
         
         # M04 tests
         test_suite.test_spatial_transformer_forward()
