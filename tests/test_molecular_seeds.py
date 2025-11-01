@@ -339,6 +339,92 @@ class TestMolecularSeeds:
         assert not torch.isnan(reconstructed).any()
         
         print("✓ Inverse transform successful")
+    
+    # ========== M06: Context Integrator ==========
+    
+    def test_context_integrator_forward(self):
+        """M06: Forward pass 테스트"""
+        print("\n[16/18] Testing Context Integrator - Forward pass...")
+        
+        from seeds.molecular import ContextIntegrator
+        
+        seed = ContextIntegrator(input_dim=self.input_dim)
+        seed = seed.to(self.device)
+        
+        # 입력: [B, L, D] - 시퀀스
+        seq_len = 50
+        x = torch.randn(self.batch_size, seq_len, self.input_dim).to(self.device)
+        
+        # Forward
+        output = seed(x)
+        
+        # 출력 shape 확인
+        assert output.shape == (self.batch_size, seq_len, self.input_dim)
+        assert not torch.isnan(output).any()
+        
+        print("✓ Forward pass successful")
+    
+    def test_context_integrator_metadata(self):
+        """M06: Metadata 반환 테스트"""
+        print("\n[17/18] Testing Context Integrator - Metadata...")
+        
+        from seeds.molecular import ContextIntegrator
+        
+        seed = ContextIntegrator(input_dim=self.input_dim)
+        seed = seed.to(self.device)
+        
+        seq_len = 50
+        x = torch.randn(self.batch_size, seq_len, self.input_dim).to(self.device)
+        
+        # Metadata 반환
+        output, metadata = seed(x, return_metadata=True)
+        
+        # Metadata 키 확인
+        expected_keys = [
+            'local_context', 'global_context', 'temporal_context',
+            'hierarchical_context', 'group_context', 'fused_context', 'fusion_weights'
+        ]
+        assert all(k in metadata for k in expected_keys)
+        
+        # Context shape 확인
+        for key in ['local_context', 'global_context', 'temporal_context', 
+                    'hierarchical_context', 'group_context', 'fused_context']:
+            assert metadata[key].shape == (self.batch_size, seq_len, self.input_dim)
+        
+        # Fusion weights 확인
+        assert metadata['fusion_weights'].shape == (5,)
+        assert torch.allclose(metadata['fusion_weights'].sum(), torch.tensor(1.0), atol=1e-5)
+        
+        print("✓ Metadata returned correctly")
+    
+    def test_context_integrator_importance(self):
+        """M06: Context importance 테스트"""
+        print("\n[18/18] Testing Context Integrator - Context importance...")
+        
+        from seeds.molecular import ContextIntegrator
+        
+        seed = ContextIntegrator(input_dim=self.input_dim)
+        seed = seed.to(self.device)
+        
+        seq_len = 50
+        x = torch.randn(self.batch_size, seq_len, self.input_dim).to(self.device)
+        
+        # Context importance 계산
+        importance = seed.get_context_importance(x)
+        
+        # 키 확인
+        expected_keys = ['local', 'global', 'temporal', 'hierarchical', 'group']
+        assert all(k in importance for k in expected_keys)
+        
+        # 합이 1인지 확인
+        total = sum(importance.values())
+        assert abs(total - 1.0) < 1e-5, f"Importance sum: {total}"
+        
+        # 모든 값이 0-1 범위인지 확인
+        for v in importance.values():
+            assert 0 <= v <= 1
+        
+        print("✓ Context importance calculated correctly")
 
 
 def run_all_tests():
@@ -373,6 +459,11 @@ def run_all_tests():
         test_suite.test_spatial_transformer_alignment()
         test_suite.test_spatial_transformer_inverse()
         
+        # M06 tests
+        test_suite.test_context_integrator_forward()
+        test_suite.test_context_integrator_metadata()
+        test_suite.test_context_integrator_importance()
+        
         print("\n" + "=" * 60)
         print("All tests passed! ✓")
         print("=" * 60)
@@ -384,4 +475,3 @@ def run_all_tests():
 
 if __name__ == "__main__":
     run_all_tests()
-

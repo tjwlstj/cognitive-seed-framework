@@ -13,20 +13,21 @@ __version__ = "1.1.0"
 from .base import BaseSeed, SeedConfig
 
 # Atomic seeds
-from .atomic.a01_edge_detector import A01_EdgeDetector
-from .atomic.a02_symmetry_detector import A02_SymmetryDetector
-from .atomic.a03_recurrence_spotter import A03_RecurrenceSpotter
-from .atomic.a04_contrast_amplifier import A04_ContrastAmplifier
-from .atomic.a05_grouping_nucleus import A05_GroupingNucleus
-from .atomic.a06_sequence_tracker import A06_SequenceTracker
-from .atomic.a07_scale_normalizer import A07_ScaleNormalizer
-from .atomic.a08_binary_comparator import A08_BinaryComparator
+from .atomic.a01_edge_detector import EdgeDetector as A01_EdgeDetector
+from .atomic.a02_symmetry_detector import SymmetryDetector as A02_SymmetryDetector
+from .atomic.a03_recurrence_spotter import RecurrenceSpotter as A03_RecurrenceSpotter
+from .atomic.a04_contrast_amplifier import ContrastAmplifier as A04_ContrastAmplifier
+from .atomic.a05_grouping_nucleus import GroupingNucleus as A05_GroupingNucleus
+from .atomic.a06_sequence_tracker import SequenceTracker as A06_SequenceTracker
+from .atomic.a07_scale_normalizer import ScaleNormalizer as A07_ScaleNormalizer
+from .atomic.a08_binary_comparator import BinaryComparator as A08_BinaryComparator
 
 # Molecular seeds
-from .molecular.m01_hierarchy_builder import M01_HierarchyBuilder
-from .molecular.m02_causality_detector import M02_CausalityDetector
-from .molecular.m03_pattern_completer import M03_PatternCompleter
-from .molecular.m04_spatial_transformer import M04_SpatialTransformer
+from .molecular.m01_hierarchy_builder import HierarchyBuilder as M01_HierarchyBuilder
+from .molecular.m02_causality_detector import CausalityDetector as M02_CausalityDetector
+from .molecular.m03_pattern_completer import PatternCompleter as M03_PatternCompleter
+from .molecular.m04_spatial_transformer import SpatialTransformer as M04_SpatialTransformer
+from .molecular.m06_context_integrator import ContextIntegrator as M06_ContextIntegrator
 
 # Seed ID to class mapping
 _SEED_REGISTRY = {
@@ -91,6 +92,11 @@ _SEED_REGISTRY = {
     "SEED-M04": M04_SpatialTransformer,
     "M04_Spatial_Transformer": M04_SpatialTransformer,
     "M04_SpatialTransformer": M04_SpatialTransformer,
+    
+    "M06": M06_ContextIntegrator,
+    "SEED-M06": M06_ContextIntegrator,
+    "M06_Context_Integrator": M06_ContextIntegrator,
+    "M06_ContextIntegrator": M06_ContextIntegrator,
 }
 
 
@@ -160,5 +166,6 @@ __all__ = [
     "M02_CausalityDetector",
     "M03_PatternCompleter",
     "M04_SpatialTransformer",
+    "M06_ContextIntegrator",
 ]
 

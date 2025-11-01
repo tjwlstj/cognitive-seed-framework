@@ -1,6 +1,42 @@
-# Changelog
+# CHANGELOG
 
 모든 주요 변경 사항이 이 파일에 기록됩니다.
+
+## [1.2.0] - 2025-11-01
+
+### Added
+
+#### M06: Context Integrator 구현
+- **SEED-M06: Context Integrator** (Level 1 - Molecular)
+  - 다층적 맥락 통합 및 중의성 해소
+  - Multi-scale context encoding (local/global)
+  - Hierarchical context integration (A06 + M01 + A05)
+  - Cross-attention + Weighted sum fusion
+  - 3-layer MLP disambiguator
+  - 파라미터 수: ~2,092K
+  - 단위 테스트 3개 추가 (18/18 전체 통과)
+
+#### 프로젝트 통합
+- `seeds/__init__.py` import 오류 수정
+  - Atomic 시드 클래스명 불일치 해결
+  - Molecular 시드 import 수정
+  - M06 레지스트리 추가
+- `seeds/molecular/__init__.py` M06 export 추가
+- `tests/test_molecular_seeds.py` M06 테스트 추가
+
+#### 문서화
+- `M06_IMPLEMENTATION_COMPLETE.md`: 구현 완료 보고서
+- `ROADMAP.md`: 통합 로드맵 작성 (6개 Phase)
+
+### Fixed
+- `seeds/__init__.py`: Atomic/Molecular 시드 import 오류 수정
+  - `EdgeDetector as A01_EdgeDetector` 형식으로 변경
+  - 모든 시드에 대해 일관된 명명 규칙 적용
+
+### Progress
+- **Level 1 (Molecular)**: 5/8 완료 (62.5%)
+  - M01, M02, M03, M04, M06 ✅
+  - M05, M07, M08 ⏳
 
 ## [1.1.0] - 2025-10-20
 
