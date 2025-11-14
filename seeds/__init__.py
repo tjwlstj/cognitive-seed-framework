@@ -28,6 +28,7 @@ from .molecular.m02_causality_detector import CausalityDetector as M02_Causality
 from .molecular.m03_pattern_completer import PatternCompleter as M03_PatternCompleter
 from .molecular.m04_spatial_transformer import SpatialTransformer as M04_SpatialTransformer
 from .molecular.m06_context_integrator import ContextIntegrator as M06_ContextIntegrator
+from .molecular.m07_analogy_mapper import AnalogyMapper as M07_AnalogyMapper
 
 # Seed ID to class mapping
 _SEED_REGISTRY = {
@@ -97,6 +98,11 @@ _SEED_REGISTRY = {
     "SEED-M06": M06_ContextIntegrator,
     "M06_Context_Integrator": M06_ContextIntegrator,
     "M06_ContextIntegrator": M06_ContextIntegrator,
+    
+    "M07": M07_AnalogyMapper,
+    "SEED-M07": M07_AnalogyMapper,
+    "M07_Analogy_Mapper": M07_AnalogyMapper,
+    "M07_AnalogyMapper": M07_AnalogyMapper,
 }
 
 
@@ -167,5 +173,6 @@ __all__ = [
     "M03_PatternCompleter",
     "M04_SpatialTransformer",
     "M06_ContextIntegrator",
+    "M07_AnalogyMapper",
 ]
 
