@@ -263,31 +263,51 @@ python benchmarks/run_evaluation.py --level all --output results.json
 
 ## 로드맵
 
-- **Phase 1**: 32 시드 참조 구현 + 단독 벤치마크 ✅ (Level 0-1 완료)
-- **Phase 2**: 백본 통합·QAT + 공개 벤치마크 결과 (진행 중)
-- **Phase 3**: 허브/배포 자동화, 아키텍처 검색
-- **Phase 4**: 신경과학 영감 신규 시드, 안전·윤리 프레임 통합
+- **Phase 1**: 32 시드 참조 구현 + 단독 벤치마크 ✅ (Level 0 완료)
+- **Phase 2**: Level 1 (Molecular) 구현 ✅ (8/8 완료)
+- **Phase 3**: Level 2 (Cellular) 구현 (예정)
+- **Phase 4**: Level 3 (Tissue) 구현 (예정)
+- **Phase 5**: 백본 통합·QAT + 공개 벤치마크 결과
+- **Phase 6**: 허브/배포 자동화, 아키텍처 검색
+- **Phase 7**: 신경과학 영감 신규 시드, 안전·윤리 프레임 통합
 
-## 최근 업데이트 (v1.1.1)
+## 구현 현황
+
+### Level 0 (Atomic) - 100% ✅
+- A01~A08 전체 구현 완료
+- 총 파라미터: ~1.09M
+
+### Level 1 (Molecular) - 100% ✅
+- M01~M08 전체 구현 완료
+- 총 파라미터: ~6.37M
+- 최근 완성: M08 Conflict Resolver (2025-11-17)
+
+### Level 2 (Cellular) - 0% 📅
+- C01~C08 예정
+
+### Level 3 (Tissue) - 0% 📅
+- T01~T08 예정
+
+**전체 진행률**: 16/32 (50%) 🎉
+
+## 최근 업데이트 (v1.2.0)
 
 ### 추가된 기능
 
-1. **load_seed() 헬퍼 함수**: 다양한 명명 규칙 지원 (`seeds/__init__.py`)
-2. **재현성 유틸리티 모듈**: PyTorch 재현성 보장 (`core/reproducibility.py`)
-   - `set_seed()`: 전역 시드 설정
-   - `seed_worker()`: DataLoader worker seed 초기화
-   - `check_reproducibility()`: 자동 재현성 검증
-   - `ReproducibleContext`: 컨텍스트 매니저
-   - `enable_reproducibility()`: Magic Seed 3407 사용
-3. **별칭 매핑 시스템**: SeedRegistry에서 다양한 시드 ID 형식 지원
-4. **DAG 위상 정렬**: Kahn's algorithm 기반 순환 의존성 감지
+1. **M08 Conflict Resolver 구현**: Level 1 완성 (8/8)
+   - A08, M06, M02 통합
+   - 충돌 탐지, 우선순위 계산, 공정성 보장
+   - 24개 단위 테스트 포함
+2. **M05 Concept Crystallizer 등록**: seeds/__init__.py 업데이트
+3. **개발 계획 v2**: 토큰 효율적인 분할 개발 계획 수립
 
-### 수정된 문제
+### 주요 마일스톤
 
-- ✅ README Quick Start 예제 코드 수정 (실제 import 경로와 일치)
-- ✅ PyTorch DataLoader worker seed 버그 해결
-- ✅ 시드 명명 규칙 통일 (A01, SEED-A01, A01_Edge_Detector 모두 지원)
-- ✅ CompositionEngine의 DAG 실행 순서 알고리즘 구현 완료
+- ✅ Level 0 (Atomic) 8개 시드 완성
+- ✅ Level 1 (Molecular) 8개 시드 완성
+- ✅ 보안 검사 통과 (Bandit, pip-audit)
+- ✅ 의존성 안정화
+- 📅 Level 2 (Cellular) 구현 예정
 
 ## 기여
 
