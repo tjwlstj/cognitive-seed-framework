@@ -27,8 +27,10 @@ from .molecular.m01_hierarchy_builder import HierarchyBuilder as M01_HierarchyBu
 from .molecular.m02_causality_detector import CausalityDetector as M02_CausalityDetector
 from .molecular.m03_pattern_completer import PatternCompleter as M03_PatternCompleter
 from .molecular.m04_spatial_transformer import SpatialTransformer as M04_SpatialTransformer
+from .molecular.m05_concept_crystallizer import ConceptCrystallizer as M05_ConceptCrystallizer
 from .molecular.m06_context_integrator import ContextIntegrator as M06_ContextIntegrator
 from .molecular.m07_analogy_mapper import AnalogyMapper as M07_AnalogyMapper
+from .molecular.m08_conflict_resolver import ConflictResolver as M08_ConflictResolver
 
 # Seed ID to class mapping
 _SEED_REGISTRY = {
@@ -94,6 +96,11 @@ _SEED_REGISTRY = {
     "M04_Spatial_Transformer": M04_SpatialTransformer,
     "M04_SpatialTransformer": M04_SpatialTransformer,
     
+    "M05": M05_ConceptCrystallizer,
+    "SEED-M05": M05_ConceptCrystallizer,
+    "M05_Concept_Crystallizer": M05_ConceptCrystallizer,
+    "M05_ConceptCrystallizer": M05_ConceptCrystallizer,
+    
     "M06": M06_ContextIntegrator,
     "SEED-M06": M06_ContextIntegrator,
     "M06_Context_Integrator": M06_ContextIntegrator,
@@ -103,6 +110,11 @@ _SEED_REGISTRY = {
     "SEED-M07": M07_AnalogyMapper,
     "M07_Analogy_Mapper": M07_AnalogyMapper,
     "M07_AnalogyMapper": M07_AnalogyMapper,
+    
+    "M08": M08_ConflictResolver,
+    "SEED-M08": M08_ConflictResolver,
+    "M08_Conflict_Resolver": M08_ConflictResolver,
+    "M08_ConflictResolver": M08_ConflictResolver,
 }
 
 
@@ -172,7 +184,9 @@ __all__ = [
     "M02_CausalityDetector",
     "M03_PatternCompleter",
     "M04_SpatialTransformer",
+    "M05_ConceptCrystallizer",
     "M06_ContextIntegrator",
     "M07_AnalogyMapper",
+    "M08_ConflictResolver",
 ]
 
