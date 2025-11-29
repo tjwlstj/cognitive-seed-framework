@@ -282,8 +282,9 @@ python benchmarks/run_evaluation.py --level all --output results.json
 - 총 파라미터: ~6.37M
 - 최근 완성: M08 Conflict Resolver (2025-11-17)
 
-### Level 2 (Cellular) - 0% 📅
-- C01~C08 예정
+### Level 2 (Cellular) - 12.5% 🟡
+- C01 Metaphor Engine: ✅ 완료 (2025-11-26)
+- C02~C08: 📅 예정
 
 ### Level 3 (Tissue) - 0% 📅
 - T01~T08 예정
