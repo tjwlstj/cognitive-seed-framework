@@ -5,7 +5,9 @@ Cellular Level Seeds (Level 2)
 """
 
 from .c01_metaphor_engine import MetaphorEngine
+from .c03_schema_learner import SchemaLearner
 
 __all__ = [
     'MetaphorEngine',
+    'SchemaLearner',
 ]
