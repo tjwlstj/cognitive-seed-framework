@@ -7,10 +7,12 @@ Cellular Level Seeds (Level 2)
 from .c01_metaphor_engine import MetaphorEngine
 from .c02_counterfactual_reasoner import CounterfactualReasoner, create_counterfactual_reasoner
 from .c03_schema_learner import SchemaLearner
+from .c06_attention_director import AttentionDirector
 
 __all__ = [
     'MetaphorEngine',
     'CounterfactualReasoner',
     'create_counterfactual_reasoner',
     'SchemaLearner',
+    'AttentionDirector',
 ]

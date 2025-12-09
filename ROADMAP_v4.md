@@ -40,7 +40,7 @@
 
 | 항목 | 완료 | 전체 | 진행률 |
 |---|---|---|---|
-| **시드 구현** | 18 | 32 | 56.3% |
+| **시드 구현** | 19 | 32 | 59.4% |
 | **Phase** | 2.2 | 6 | 36.7% |
 
 ### 2.2. 레벨별 진행 상황
@@ -52,7 +52,7 @@
 - **시드**: M01~M08 (8개) 전체 구현 및 테스트 완료
 - **벤치마크**: `benchmarks/level1_benchmark.py` 구축 완료
 
-#### Level 2 (Cellular) - 25.0% 진행 중 🟡
+#### Level 2 (Cellular) - 50.0% 진행 중 🟡
 | ID | Name | 상태 | 구성 시드 | 비고 |
 |---|---|---|---|---|
 | C01 | Metaphor Engine | ✅ | M01+M07+M05 | 2025-11-26 완료 |
@@ -60,7 +60,7 @@
 | C03 | Schema Learner | ✅ | M01+M05+A05 | 2025-12-01 완료 |
 | C04 | Perspective Shifter | ❌ | M04+M07+A02 | 예정 |
 | C05 | Narrative Constructor | ❌ | M06+M03+A06 | 예정 |
-| C06 | Attention Director | ❌ | M06+M01+A05 | 예정 |
+| C06 | Attention Director | ✅ | M06+M01+A05 | 2025-12-09 완료 |
 | C07 | Boundary Detector | ❌ | A01+M03+M06 | 예정 |
 | C08 | Novelty Assessor | ❌ | M05+M07+A04 | 예정 |
 

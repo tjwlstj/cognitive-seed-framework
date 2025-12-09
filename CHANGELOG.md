@@ -2,6 +2,27 @@
 
 모든 주요 변경 사항이 이 파일에 기록됩니다.
 
+## [1.5.0] - 2025-12-09
+
+### Added
+- **C06: Attention Director 구현** (Level 2)
+  - M06, M01, A05 시드를 조합하여 주의 가중 배분 기능 구현
+  - Multi-level attention computation (그룹, 계층, 맥락 기반)
+  - Dynamic importance scoring 및 context-aware attention weighting
+  - 단위 테스트 17개 추가
+  - 파라미터 수: ~1.9M (예상)
+  - 구현 완료 보고서: C06_IMPLEMENTATION_COMPLETE.md
+
+### Changed
+- **seeds/cellular/__init__.py**: C06 AttentionDirector import 추가
+- **VERSION**: 1.4.0 → 1.5.0
+
+### Progress
+- **Level 2 (Cellular)**: 4/8 완료 (50.0%) 🟡
+- **전체 진행률**: 19/32 (59.4%)
+
+---
+
 ## [1.4.0] - 2025-12-01
 
 ### Added
