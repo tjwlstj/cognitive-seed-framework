@@ -8,6 +8,7 @@ from .c01_metaphor_engine import MetaphorEngine
 from .c02_counterfactual_reasoner import CounterfactualReasoner, create_counterfactual_reasoner
 from .c03_schema_learner import SchemaLearner
 from .c06_attention_director import AttentionDirector
+from .c07_boundary_detector import BoundaryDetector, create_boundary_detector
 
 __all__ = [
     'MetaphorEngine',
@@ -15,4 +16,6 @@ __all__ = [
     'create_counterfactual_reasoner',
     'SchemaLearner',
     'AttentionDirector',
+    'BoundaryDetector',
+    'create_boundary_detector',
 ]
