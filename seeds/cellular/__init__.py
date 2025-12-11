@@ -9,6 +9,7 @@ from .c02_counterfactual_reasoner import CounterfactualReasoner, create_counterf
 from .c03_schema_learner import SchemaLearner
 from .c06_attention_director import AttentionDirector
 from .c07_boundary_detector import BoundaryDetector, create_boundary_detector
+from .c08_novelty_assessor import NoveltyAssessor
 
 __all__ = [
     'MetaphorEngine',
@@ -18,4 +19,5 @@ __all__ = [
     'AttentionDirector',
     'BoundaryDetector',
     'create_boundary_detector',
+    'NoveltyAssessor',
 ]
