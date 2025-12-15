@@ -7,6 +7,8 @@ Cellular Level Seeds (Level 2)
 from .c01_metaphor_engine import MetaphorEngine
 from .c02_counterfactual_reasoner import CounterfactualReasoner, create_counterfactual_reasoner
 from .c03_schema_learner import SchemaLearner
+from .c04_perspective_shifter import PerspectiveShifter, create_perspective_shifter
+from .c05_narrative_constructor import NarrativeConstructor, create_narrative_constructor
 from .c06_attention_director import AttentionDirector
 from .c07_boundary_detector import BoundaryDetector, create_boundary_detector
 from .c08_novelty_assessor import NoveltyAssessor
@@ -16,6 +18,10 @@ __all__ = [
     'CounterfactualReasoner',
     'create_counterfactual_reasoner',
     'SchemaLearner',
+    'PerspectiveShifter',
+    'create_perspective_shifter',
+    'NarrativeConstructor',
+    'create_narrative_constructor',
     'AttentionDirector',
     'BoundaryDetector',
     'create_boundary_detector',
