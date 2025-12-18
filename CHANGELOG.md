@@ -1,25 +1,35 @@
-# CHANGELOG
+_# CHANGELOG_
 
 모든 주요 변경 사항이 이 파일에 기록됩니다.
+
+## [2.0.0] - 2025-12-18
+
+### Added
+- **Level 2 (Cellular) 100% 완료**
+  - **C02: Counterfactual Reasoner 구현**
+  - **C04: Perspective Shifter 구현**
+  - **C05: Narrative Constructor 구현**
+  - **C07: Boundary Detector 구현**
+  - **C08: Novelty Assessor 구현**
+
+### Changed
+- **로드맵 v4.0 업데이트**: Level 2 완료를 반영하고, Level 3 구현을 위한 상세 개발 세션 계획을 수립했습니다.
+- **README.md 업데이트**: 프로젝트 진행률(75%) 및 최근 업데이트 내역을 최신 정보로 수정했습니다.
+- **VERSION**: 1.5.0 → 2.0.0
+
+### Progress
+- **Level 2 (Cellular)**: 8/8 완료 (100%) ✅
+- **전체 진행률**: 24/32 (75.0%)
+
+---
 
 ## [1.5.0] - 2025-12-09
 
 ### Added
 - **C06: Attention Director 구현** (Level 2)
-  - M06, M01, A05 시드를 조합하여 주의 가중 배분 기능 구현
-  - Multi-level attention computation (그룹, 계층, 맥락 기반)
-  - Dynamic importance scoring 및 context-aware attention weighting
-  - 단위 테스트 17개 추가
-  - 파라미터 수: ~1.9M (예상)
-  - 구현 완료 보고서: C06_IMPLEMENTATION_COMPLETE.md
-
-### Changed
-- **seeds/cellular/__init__.py**: C06 AttentionDirector import 추가
-- **VERSION**: 1.4.0 → 1.5.0
 
 ### Progress
 - **Level 2 (Cellular)**: 4/8 완료 (50.0%) 🟡
-- **전체 진행률**: 19/32 (59.4%)
 
 ---
 
@@ -27,179 +37,46 @@
 
 ### Added
 - **C03: Schema Learner 구현** (Level 2)
-  - M01, M05, A05 시드를 조합하여 스키마 학습 기능 구현
-  - 패턴 그룹화, 개념 추출, 계층 구조 학습, 구조적 규칙 추출 기능
-  - 단위 테스트 15개 추가 (모두 통과)
-  - 파라미터 수: ~1.38M
-  - 구현 완료 보고서: C03_IMPLEMENTATION_COMPLETE.md
 
 ### Progress
 - **Level 2 (Cellular)**: 2/8 완료 (25.0%) 🟡
-- **전체 진행률**: 18/32 (56.3%)
 
 ---
 
 ## [1.3.0] - 2025-11-27
 ### Added
 - **C01: Metaphor Engine 구현** (Level 2)
-  - M01, M07, M05 시드를 조합하여 은유 매핑 기능 구현
-  - 단위 테스트 및 구현 완료 보고서 추가
 - **M08: Conflict Resolver 구현** (Level 1)
-  - A08, M06, M02 시드를 조합하여 제약 충돌 해소 기능 구현
 - **M07: Analogy Mapper 구현** (Level 1)
-  - M01, A08, M05 시드를 조합하여 구조적 유사성 매핑 기능 구현
 
 ### Changed
 - **로드맵 v3.0 업데이트**
-  - 프로젝트 현황(Level 2 진행)을 반영하여 로드맵 최신화
-  - 토큰 효율적 분산 개발을 위한 세션 기반 계획 도입
 - **Level 1 벤치마크 구축**
-  - `benchmarks/level1_benchmark.py`를 통해 Level 1 시드 성능 검증
 
 ### Progress
 - **Level 1 (Molecular)**: 8/8 완료 (100%) ✅
 - **Level 2 (Cellular)**: 1/8 완료 (12.5%) 🟡
-- **전체 진행률**: 17/32 (53.1%)
+
+---
 
 ## [1.2.0] - 2025-11-01
 
 ### Added
-
-#### M06: Context Integrator 구현
-- **SEED-M06: Context Integrator** (Level 1 - Molecular)
-  - 다층적 맥락 통합 및 중의성 해소
-  - Multi-scale context encoding (local/global)
-  - Hierarchical context integration (A06 + M01 + A05)
-  - Cross-attention + Weighted sum fusion
-  - 3-layer MLP disambiguator
-  - 파라미터 수: ~2,092K
-  - 단위 테스트 3개 추가 (18/18 전체 통과)
-
-#### 프로젝트 통합
-- `seeds/__init__.py` import 오류 수정
-  - Atomic 시드 클래스명 불일치 해결
-  - Molecular 시드 import 수정
-  - M06 레지스트리 추가
-- `seeds/molecular/__init__.py` M06 export 추가
-- `tests/test_molecular_seeds.py` M06 테스트 추가
-
-#### 문서화
-- `M06_IMPLEMENTATION_COMPLETE.md`: 구현 완료 보고서
-- `ROADMAP.md`: 통합 로드맵 작성 (6개 Phase)
-
-### Fixed
-- `seeds/__init__.py`: Atomic/Molecular 시드 import 오류 수정
-  - `EdgeDetector as A01_EdgeDetector` 형식으로 변경
-  - 모든 시드에 대해 일관된 명명 규칙 적용
+- **M06: Context Integrator 구현**
 
 ### Progress
 - **Level 1 (Molecular)**: 5/8 완료 (62.5%)
-  - M01, M02, M03, M04, M06 ✅
-  - M05, M07, M08 ⏳
+
+---
 
 ## [1.1.0] - 2025-10-20
 
 ### Added
-
-#### 코어 아키텍처 구현
-- **SeedRegistry**: 32개 시드의 등록, 메타데이터 관리, 검색 기능
-  - 시드 등록/해제 API
-  - 레벨, 태그, 기하학, 비트폭 기반 검색
-  - 의존성 조회 (재귀적 지원)
-  
-- **SeedRouter**: 동적 시드 선택 라우터
-  - TaskEncoder: 태스크 설명 인코딩 (LSTM 기반)
-  - InputAnalyzer: 입력 데이터 분석
-  - GatingNetwork: 시드 활성화 확률 계산
-  - Top-k 및 threshold 기반 선택
-  - 의존성 자동 포함 기능
-  
-- **CompositionEngine**: 시드 조합 및 실행 엔진
-  - DAG (Directed Acyclic Graph) 생성
-  - 위상 정렬 기반 실행 순서 결정
-  - 의존성 자동 해결
-  - 캐시 통합 지원
-  - 그래프 시각화 기능
-  
-- **CacheManager**: LRU 캐시 기반 결과 캐싱
-  - 메모리 크기 및 항목 수 제한
-  - LRU 제거 정책
-  - 캐시 히트율 통계
-  
-- **MetricsCollector**: 성능 지표 수집
-  - 시드별 실행 시간 추적
-  - 캐시 히트율 모니터링
-  - 전체 실행 통계
-  - Top-N 시드 분석
-
-#### 문서화
-- **CORE_ARCHITECTURE.md**: 코어 아키텍처 설계 가이드
-  - 5대 컴포넌트 상세 설명
-  - API 설계 및 사용법
-  - 학습 전략 (3단계 하이브리드)
-  - 참조 연구 (Dynamic Neural Networks, Neural Module Networks)
-  
-- **dynamic_networks_survey.md**: Dynamic Neural Networks 서베이 핵심 내용
-  - 동적 라우팅 메커니즘
-  - 게이팅 함수 설계
-  - 효율성 최적화 기법
-  
-- **neural_module_networks.md**: Neural Module Networks 핵심 내용
-  - 모듈 조합 패턴
-  - 공동 학습 방법론
-  - 인터페이스 표준화
-
-#### 테스트 및 예제
-- **tests/test_core.py**: 코어 컴포넌트 단위 테스트
-  - SeedRegistry 테스트
-  - CacheManager 테스트
-  - CompositionEngine 테스트
-  - MetricsCollector 테스트
-  
-- **examples/basic_usage.py**: 기본 사용법 예제
-  - 시드 정의 및 등록
-  - 조합 그래프 생성
-  - 실행 및 캐싱
-  - 통계 수집
-
-### Changed
-- README.md 업데이트: 코어 아키텍처 섹션 추가
-- requirements.txt 업데이트: PyTorch 의존성 명시
-
-### Technical Details
-- **언어**: Python 3.11+
-- **프레임워크**: PyTorch 2.0+
-- **아키텍처**: 모듈식, 플러그인 기반
-- **디자인 패턴**: Registry, Strategy, DAG
+- **코어 아키텍처 구현** (Registry, Router, Engine, Cache, Metrics)
 
 ---
 
 ## [1.0.0] - 2025-10-19
 
 ### Added
-- 초기 프로젝트 구조 생성
-- README.md 작성
-- 32개 시드 카탈로그 정의
-- 표준 인지 시드 설계 가이드 v1 문서화
-- 시드 제작 관련 최신 문헌 조사
-  - 쌍곡 신경망 (Hyperbolic Networks)
-  - 스케일 등변 신경망 (Scale-Equivariant Networks)
-  - FP8 양자화 (FP8 Quantization)
-- LICENSE (Apache 2.0)
-- .gitignore
-- requirements.txt
-
-### Documentation
-- RESEARCH_SUMMARY.md: 40편 이상 논문 조사 요약
-- hyperbolic_networks_notes.md
-- scale_equivariant_notes.md
-- fp8_quantization_notes.md
-
----
-
-## Versioning
-
-이 프로젝트는 [Semantic Versioning](https://semver.org/)을 따릅니다:
-- **MAJOR**: 호환되지 않는 API 변경
-- **MINOR**: 하위 호환되는 기능 추가
-- **PATCH**: 하위 호환되는 버그 수정
+- 초기 프로젝트 구조 생성 및 32개 시드 카탈로그 정의
