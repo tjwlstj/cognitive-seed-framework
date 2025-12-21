@@ -5,7 +5,7 @@ torch==2.0.0
 torchvision==0.15.0
 
 # Riemannian geometry for Hyperbolic/Spherical projections
-geoopt==0.5.0
+geoopt==0.5.1
 
 # Quantization and optimization
 bitsandbytes==0.41.0
