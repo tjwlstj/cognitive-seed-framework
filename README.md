@@ -261,15 +261,13 @@ with ReproducibleContext(seed=42):
 python benchmarks/run_evaluation.py --level all --output results.json
 ```
 
-## 로드맵
+## 로드맵 (v5.0)
 
-- **Phase 1**: 32 시드 참조 구현 + 단독 벤치마크 ✅ (Level 0 완료)
-- **Phase 2**: Level 1 (Molecular) 구현 ✅ (8/8 완료)
-- **Phase 3**: Level 2 (Cellular) 구현 (예정)
-- **Phase 4**: Level 3 (Tissue) 구현 (예정)
-- **Phase 5**: 백본 통합·QAT + 공개 벤치마크 결과
-- **Phase 6**: 허브/배포 자동화, 아키텍처 검색
-- **Phase 7**: 신경과학 영감 신규 시드, 안전·윤리 프레임 통합
+프로젝트의 최종 완성을 위한 상세 로드맵은 [ROADMAP.md](ROADMAP.md) 문서를 참조하세요. 현재 프로젝트는 다음 핵심 단계를 진행하고 있습니다.
+
+- **Phase 4 (진행중)**: Level 3 (Tissue) 시드 8개 구현
+- **Phase 5 (진행중)**: 프로젝트 안정화 및 자동화 (CI/CD, 보안 강화 등)
+- **Phase 6 (예정)**: 최종 최적화, 배포 및 연구
 
 ## 구현 현황
 
@@ -296,7 +294,7 @@ python benchmarks/run_evaluation.py --level all --output results.json
 ### 추가된 기능
 
 1. **Level 2 (Cellular) 8개 시드 완성**: C01~C08 전체 구현 완료
-2. **로드맵 v4.0 수립**: Level 3 구현을 위한 상세 개발 세션 계획 수립
+2. **최종 로드맵(v5.0) 수립**: Level 3 구현과 프로젝트 안정화를 병렬로 진행하는 최종 개발 계획을 수립했습니다.
 3. **프로젝트 문서 최신화**: README, CHANGELOG, ROADMAP 등 주요 문서 현행화
 
 ### 주요 마일스톤
