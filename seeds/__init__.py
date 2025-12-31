@@ -32,6 +32,19 @@ from .molecular.m06_context_integrator import ContextIntegrator as M06_ContextIn
 from .molecular.m07_analogy_mapper import AnalogyMapper as M07_AnalogyMapper
 from .molecular.m08_conflict_resolver import ConflictResolver as M08_ConflictResolver
 
+# Cellular seeds
+from .cellular.c01_metaphor_engine import MetaphorEngine as C01_MetaphorEngine
+from .cellular.c02_counterfactual_reasoner import CounterfactualReasoner as C02_CounterfactualReasoner
+from .cellular.c03_schema_learner import SchemaLearner as C03_SchemaLearner
+from .cellular.c04_perspective_shifter import PerspectiveShifter as C04_PerspectiveShifter
+from .cellular.c05_narrative_constructor import NarrativeConstructor as C05_NarrativeConstructor
+from .cellular.c06_attention_director import AttentionDirector as C06_AttentionDirector
+from .cellular.c07_boundary_detector import BoundaryDetector as C07_BoundaryDetector
+from .cellular.c08_novelty_assessor import NoveltyAssessor as C08_NoveltyAssessor
+
+# Tissue seeds
+from .tissue.t01_abductive_reasoner import AbductiveReasoner as T01_AbductiveReasoner
+
 # Seed ID to class mapping
 _SEED_REGISTRY = {
     # Atomic seeds - support multiple naming conventions
@@ -115,6 +128,53 @@ _SEED_REGISTRY = {
     "SEED-M08": M08_ConflictResolver,
     "M08_Conflict_Resolver": M08_ConflictResolver,
     "M08_ConflictResolver": M08_ConflictResolver,
+    
+    # Cellular seeds
+    "C01": C01_MetaphorEngine,
+    "SEED-C01": C01_MetaphorEngine,
+    "C01_Metaphor_Engine": C01_MetaphorEngine,
+    "C01_MetaphorEngine": C01_MetaphorEngine,
+    
+    "C02": C02_CounterfactualReasoner,
+    "SEED-C02": C02_CounterfactualReasoner,
+    "C02_Counterfactual_Reasoner": C02_CounterfactualReasoner,
+    "C02_CounterfactualReasoner": C02_CounterfactualReasoner,
+    
+    "C03": C03_SchemaLearner,
+    "SEED-C03": C03_SchemaLearner,
+    "C03_Schema_Learner": C03_SchemaLearner,
+    "C03_SchemaLearner": C03_SchemaLearner,
+    
+    "C04": C04_PerspectiveShifter,
+    "SEED-C04": C04_PerspectiveShifter,
+    "C04_Perspective_Shifter": C04_PerspectiveShifter,
+    "C04_PerspectiveShifter": C04_PerspectiveShifter,
+    
+    "C05": C05_NarrativeConstructor,
+    "SEED-C05": C05_NarrativeConstructor,
+    "C05_Narrative_Constructor": C05_NarrativeConstructor,
+    "C05_NarrativeConstructor": C05_NarrativeConstructor,
+    
+    "C06": C06_AttentionDirector,
+    "SEED-C06": C06_AttentionDirector,
+    "C06_Attention_Director": C06_AttentionDirector,
+    "C06_AttentionDirector": C06_AttentionDirector,
+    
+    "C07": C07_BoundaryDetector,
+    "SEED-C07": C07_BoundaryDetector,
+    "C07_Boundary_Detector": C07_BoundaryDetector,
+    "C07_BoundaryDetector": C07_BoundaryDetector,
+    
+    "C08": C08_NoveltyAssessor,
+    "SEED-C08": C08_NoveltyAssessor,
+    "C08_Novelty_Assessor": C08_NoveltyAssessor,
+    "C08_NoveltyAssessor": C08_NoveltyAssessor,
+    
+    # Tissue seeds
+    "T01": T01_AbductiveReasoner,
+    "SEED-T01": T01_AbductiveReasoner,
+    "T01_Abductive_Reasoner": T01_AbductiveReasoner,
+    "T01_AbductiveReasoner": T01_AbductiveReasoner,
 }
 
 
@@ -188,5 +248,16 @@ __all__ = [
     "M06_ContextIntegrator",
     "M07_AnalogyMapper",
     "M08_ConflictResolver",
+    # Cellular
+    "C01_MetaphorEngine",
+    "C02_CounterfactualReasoner",
+    "C03_SchemaLearner",
+    "C04_PerspectiveShifter",
+    "C05_NarrativeConstructor",
+    "C06_AttentionDirector",
+    "C07_BoundaryDetector",
+    "C08_NoveltyAssessor",
+    # Tissue
+    "T01_AbductiveReasoner",
 ]
 
