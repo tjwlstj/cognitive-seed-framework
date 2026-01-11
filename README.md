@@ -261,15 +261,13 @@ with ReproducibleContext(seed=42):
 python benchmarks/run_evaluation.py --level all --output results.json
 ```
 
-## 로드맵
+## 로드맵 (v5.0)
 
-- **Phase 1**: 32 시드 참조 구현 + 단독 벤치마크 ✅ (Level 0 완료)
-- **Phase 2**: Level 1 (Molecular) 구현 ✅ (8/8 완료)
-- **Phase 3**: Level 2 (Cellular) 구현 (예정)
-- **Phase 4**: Level 3 (Tissue) 구현 (예정)
-- **Phase 5**: 백본 통합·QAT + 공개 벤치마크 결과
-- **Phase 6**: 허브/배포 자동화, 아키텍처 검색
-- **Phase 7**: 신경과학 영감 신규 시드, 안전·윤리 프레임 통합
+프로젝트의 최종 완성을 위한 상세 로드맵은 [ROADMAP.md](ROADMAP.md) 문서를 참조하세요. 현재 프로젝트는 다음 핵심 단계를 진행하고 있습니다.
+
+- **Phase 4 (진행중)**: Level 3 (Tissue) 시드 8개 구현
+- **Phase 5 (진행중)**: 프로젝트 안정화 및 자동화 (CI/CD, 보안 강화 등)
+- **Phase 6 (예정)**: 최종 최적화, 배포 및 연구
 
 ## 구현 현황
 
@@ -286,26 +284,32 @@ python benchmarks/run_evaluation.py --level all --output results.json
 - C01~C08 전체 구현 완료
 - 최근 완성: C04 Perspective Shifter, C05 Narrative Constructor (2025-12-15)
 
-### Level 3 (Tissue) - 0% 📅
-- T01~T08 구현 예정
+### Level 3 (Tissue) - 12.5% 🟡
+- T01 Abductive Reasoner 구현 완료 (2026-01-06)
+- T02~T08 구현 예정
 
-**전체 진행률**: 24/32 (75%) 🎉
+**전체 진행률**: 25/32 (78.1%) 🎉
 
-## 최근 업데이트 (v2.0.0)
+## 최근 업데이트 (v2.1.0)
 
 ### 추가된 기능
 
-1. **Level 2 (Cellular) 8개 시드 완성**: C01~C08 전체 구현 완료
-2. **로드맵 v4.0 수립**: Level 3 구현을 위한 상세 개발 세션 계획 수립
+1. **Level 3 (Tissue) 첫 번째 시드 구현**: T01 Abductive Reasoner 구현 완료
+   - 최선 설명 추론 (Abductive Reasoning) 기능
+   - 인과 추론, 반사실 추론, 충돌 해소 통합
+   - 13단계 추론 파이프라인
+   - 3가지 평가 메트릭: 설명력, 그럴듯함, 간결성
+2. **분할 개발 계획 수립**: 토큰 효율을 고려한 체계적인 개발 전략 확립
+2. **최종 로드맵(v5.0) 수립**: Level 3 구현과 프로젝트 안정화를 병렬로 진행하는 최종 개발 계획을 수립했습니다.
 3. **프로젝트 문서 최신화**: README, CHANGELOG, ROADMAP 등 주요 문서 현행화
 
 ### 주요 마일스톤
 
 - ✅ Level 0 (Atomic) 8개 시드 완성
-- ✅ Level 0 (Atomic) 8개 시드 완성
 - ✅ Level 1 (Molecular) 8개 시드 완성
 - ✅ Level 2 (Cellular) 8개 시드 완성
-- 📅 Level 3 (Tissue) 구현 예정
+- 🟡 Level 3 (Tissue) 1/8 완료 (T01 Abductive Reasoner)
+- 📅 Level 3 (Tissue) 나머지 7개 시드 구현 예정
 
 ## 기여
 
