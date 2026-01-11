@@ -13,7 +13,7 @@ bitsandbytes==0.49.0
 # Evaluation and metrics
 scikit-learn==1.8.0
 matplotlib==3.7.0
-seaborn==0.12.0
+seaborn==0.13.2
 
 # Data handling
 pandas==2.3.3
