@@ -8,7 +8,7 @@ torchvision==0.15.0
 geoopt==0.5.0
 
 # Quantization and optimization
-bitsandbytes==0.41.0
+bitsandbytes==0.49.0
 
 # Evaluation and metrics
 scikit-learn==1.8.0
