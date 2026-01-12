@@ -2,7 +2,7 @@
 numpy==1.26.4
 scipy==1.10.0
 torch==2.0.0
-torchvision==0.15.0
+torchvision==0.24.1
 
 # Riemannian geometry for Hyperbolic/Spherical projections
 geoopt==0.5.1
