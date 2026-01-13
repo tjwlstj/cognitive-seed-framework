@@ -24,7 +24,7 @@ pyyaml==6.0.3
 omegaconf==2.3.0
 
 # Logging and monitoring
-tensorboard==2.13.0
+tensorboard==2.20.0
 wandb==0.15.0
 
 # Testing
