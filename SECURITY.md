@@ -143,6 +143,7 @@ Subscribe to GitHub releases to receive notifications of security updates.
 
 | Date | Version | Auditor | Findings | Status |
 |---|---|---|---|---|
+| 2026-01-13 | 2.1.0 | Manus AI (누스양) | No critical vulnerabilities | ✅ Clear |
 | 2026-01-07 | 2.1.0 | Manus AI (누스양) | No critical vulnerabilities | ✅ Clear |
 | 2025-12-29 | 2.0.0 | Manus AI | No critical vulnerabilities | ✅ Clear |
 | 2025-12-26 | 2.0.0 | Manus AI | No critical vulnerabilities | ✅ Clear |
@@ -155,8 +156,8 @@ Subscribe to GitHub releases to receive notifications of security updates.
 We use the following automated security tools:
 
 - **Dependabot**: Automated dependency updates and vulnerability alerts (✅ Active)
-- **CodeQL**: Static code analysis for security vulnerabilities (✅ Active - Configured 2026-01-07)
-- **Secret Scanning**: Automated detection of exposed secrets (⚠️ Pending Activation)
+- **CodeQL**: Static code analysis for security vulnerabilities (✅ Active - Configured 2026-01-13)
+- **Secret Scanning**: Automated detection of exposed secrets (✅ Recommended for Activation)
 - **Bandit**: Python security linter
 - **Safety**: Python dependency security checker
 
@@ -174,5 +175,5 @@ We would like to thank the following security researchers for responsibly disclo
 
 ---
 
-**Last Updated**: 2026-01-07  
-**Version**: 1.3
+**Last Updated**: 2026-01-13  
+**Version**: 1.4
