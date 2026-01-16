@@ -4,6 +4,11 @@ scipy>=1.10.0
 torch>=2.0.0
 torchvision>=0.15.0
 
+# Security patches
+urllib3>=2.6.3
+werkzeug>=3.1.5
+wheel>=0.38.1
+
 # Riemannian geometry for Hyperbolic/Spherical projections
 geoopt>=0.5.0
 
@@ -36,4 +41,3 @@ black>=23.0.0
 isort>=5.12.0
 flake8>=6.0.0
 mypy>=1.4.0
-
