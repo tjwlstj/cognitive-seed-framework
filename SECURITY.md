@@ -143,6 +143,7 @@ Subscribe to GitHub releases to receive notifications of security updates.
 
 | Date | Version | Auditor | Findings | Status |
 |---|---|---|---|---|
+| 2026-01-24 | 2.1.0 | Manus AI (누스양) | 1 medium vulnerability (protobuf) | 🟡 Monitoring |
 | 2026-01-13 | 2.1.0 | Manus AI (누스양) | No critical vulnerabilities | ✅ Clear |
 | 2026-01-07 | 2.1.0 | Manus AI (누스양) | No critical vulnerabilities | ✅ Clear |
 | 2025-12-29 | 2.0.0 | Manus AI | No critical vulnerabilities | ✅ Clear |
@@ -175,5 +176,5 @@ We would like to thank the following security researchers for responsibly disclo
 
 ---
 
-**Last Updated**: 2026-01-13  
-**Version**: 1.4
+**Last Updated**: 2026-01-24  
+**Version**: 1.5

@@ -4,13 +4,13 @@ scipy>=1.10.0
 torch>=2.0.0
 torchvision>=0.15.0
 
-# Security patches (2026-01-20)
+# Security patches (2026-01-24)
 urllib3>=2.6.3
 werkzeug>=3.1.5
-wheel>=0.38.1
+wheel>=0.46.3
 pypdf>=6.6.0
-setuptools>=78.1.1
-starlette>=0.50.0
+setuptools>=80.10.1
+starlette>=0.52.1
 brotli>=1.2.0
 fonttools>=4.61.1
 weasyprint>=68.0
